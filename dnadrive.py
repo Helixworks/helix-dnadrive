@@ -67,12 +67,12 @@ def encode_file(inp,out):
    'TTTTGGGGGG']
    if (type(inp)==str)and(type(out)==str):
       if os.path.isfile(inp):
-         print "file is going to open"
+#         print "file is going to open"
          with open(inp,'rb') as f:
-            print "file opened"
+#            print "file opened"
             dnaEnc="GGGGGG"
             for line in f:
-               print line
+#              print line
                for byt in line:
                   if byt == '':
                      print "Error: file is empty"
@@ -80,7 +80,7 @@ def encode_file(inp,out):
                   hexbyt = int(binascii.hexlify(byt),16)
                   ind = divmod(hexbyt,16)
                   dnaEnc = dnaEnc + GCarr[ind[0]] + GCarr[ind[1]]
-         print dnaEnc
+#         print dnaEnc
          with open(out,'w') as w:
             w.write(dnaEnc)
       else: 
