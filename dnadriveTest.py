@@ -1,5 +1,5 @@
 import unittest
-import dnadrive
+from dnadrive import dnadrive
 
 class dnadriveTestCase(unittest.TestCase):
 

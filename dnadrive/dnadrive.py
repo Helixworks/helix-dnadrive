@@ -119,7 +119,7 @@ def decode_string(dna):
               raise Exception("Error: DNA sequence not in required format (1)")
          else: 
            raise Exception("Error: DNA sequence not in required format (2)")
-      print dnaDec
+      # print dnaDec
       return binascii.unhexlify(dnaDec)
    else:
       raise Exception("Error: Arguments should be string")
