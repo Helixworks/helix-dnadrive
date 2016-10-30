@@ -21,6 +21,14 @@ class dnadriveTestCase(unittest.TestCase):
       outp = dnadrive.decode_string(gene)
       self.assertEqual(inp,outp)
 
+   def test_encodedecodefile(self):
+      inp = "input.test"
+      outp = "output.test"
+      check = "check.test"
+      gene = dnadrive.encode_file(inp,outp)
+      outp = dnadrive.decode_file(outp,check)
+      # self.assertEqual(inp,outp)
+
 # #  Test cases for encode_file
 
 # #  Test cases for decode_string      
