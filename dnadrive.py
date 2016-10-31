@@ -92,7 +92,6 @@ def encode_file(inp,out):
       return
 
 
-
 ###############################################
 # Input: Argument as string to be decoded
 #
@@ -162,7 +161,7 @@ def decode_file(inp,out):
       'TTTT':'f'}
    if (type(inp)==str)and(type(out)==str):
       if os.path.isfile(inp):
-         with open(inp,'r') as f:
+         with open(inp,'r') as f, open(out,'w') as w:
             dnaSeq=f.read()
             dnaDec=""
             for i in xrange(0,len(dnaSeq),10):
@@ -171,18 +170,24 @@ def decode_file(inp,out):
                   if AT in hexAT.keys() :
                      dnaDec=dnaDec+hexAT[AT]
                   elif AT == '\n' :
-                    continue
-                  else: 
+                     print "ok"
+                     continue
+                  else:
+                     print "abc"+AT+"def"
                      print "Error: DNA sequence not in required format (3)",AT
                      return
                else: 
                  print "Error: DNA sequence not in required format (4)"
                  return
-            with open(out,'w') as w:
-               w.write(binascii.unhexlify(dnaDec))
+#            with open(out,'w') as w:
+            w.write(binascii.unhexlify(dnaDec))
       else:
          print "Error: File doesnot exist"
          return
    else:
       print "Error invalid arguments"
       return
+
+        
+#encode_file("/home/scis/Music/TheIrishWasherwoman.mp3","enc.txt")
+#decode_file("enc.txt","dec.mp3")
