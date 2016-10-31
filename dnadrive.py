@@ -169,12 +169,12 @@ def decode_file(inp,out):
                if (Gs == "GGGGGG"):
                   if AT in hexAT.keys() :
                      dnaDec=dnaDec+hexAT[AT]
-                  elif AT == '\n' :
-                     print "ok"
+                  elif (AT == '\n')or(AT=='') :
+#                     print "ok"
                      continue
                   else:
-                     print "abc"+AT+"def"
-                     print "Error: DNA sequence not in required format (3)",AT
+#                    print "abc"+AT+"def"
+                     print "Error: DNA sequence not in required format (3)"
                      return
                else: 
                  print "Error: DNA sequence not in required format (4)"
