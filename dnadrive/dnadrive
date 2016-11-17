@@ -4,8 +4,8 @@ import argparse
 from dnadrive import dnadrive
 parser = argparse.ArgumentParser(description='DNAdrive command line interface')
 
-parser.add_argument('-i', '--infile', nargs=1, type=argparse.FileType('r'), help='input file')
-parser.add_argument('-o', '--outfile', nargs='?', type=argparse.FileType('w'), help='output file')
+parser.add_argument('-i', '--infile', nargs='?',  help='input file')
+parser.add_argument('-o', '--outfile', nargs='?', help='output file')
 parser.add_argument('-str', '--string', nargs='?', help='input string')
 
 parser.add_argument('-s',action='store_true',default=False)
@@ -16,14 +16,24 @@ parser.add_argument('-d',action='store_true',default=False)
 
 if __name__ == '__main__':
     args = parser.parse_args()
-
+    print args
     if not (args.e or args.d):
         raise Exception("Must specify -e or -d")
     if (args.e and args.d):
         raise Exception("Must specify -e OR -d")
 
     if args.e:
-        print dnadrive.encode_string(args.string)
+        if args.string:
+            print dnadrive.encode_string(args.string)
+        elif args.infile:
+            dnadrive.encode_file(args.infile,args.outfile)
+        else:
+            raise Exception('No File detected Error')
 
     if args.d:
-        print dnadrive.decode_string(args.string)
+        if args.string:
+            print dnadrive.decode_string(args.string)
+        elif args.infile:
+            dnadrive.decode_file(args.infile,args.outfile)
+        else:
+            raise Exception('No Input File detected Error')
