@@ -169,11 +169,11 @@ def decode_file(inp,out):
                if (Gs == "GGGGGG"):
                   if AT in hexAT.keys() :
                      dnaDec=dnaDec+hexAT[AT]
-                  elif (AT == '\n')or(AT=='') :
+                  elif (AT == '')or(AT=='\n') :
 #                     print "ok"
                      continue
                   else:
-#                    print "abc"+AT+"def"
+#                     print "abc"+str(type(AT))+"def"
                      print "Error: DNA sequence not in required format (3)"
                      return
                else: 
@@ -187,7 +187,3 @@ def decode_file(inp,out):
    else:
       print "Error invalid arguments"
       return
-
-        
-#encode_file("/home/scis/Music/TheIrishWasherwoman.mp3","enc.txt")
-#decode_file("enc.txt","dec.mp3")
