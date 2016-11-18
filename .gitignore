@@ -4,3 +4,4 @@ testenvs/
 build/
 *.test
 *.png
+.DS_Store
