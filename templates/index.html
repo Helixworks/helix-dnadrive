@@ -4,7 +4,7 @@
 
     <body>
         <h2>ENCODE</h2>
-        <form id="encode-file" method="post" action="/encode/" enctype="multipart/form-data">
+        <form id="encode-file" method="post" action="/api/encode/" enctype="multipart/form-data">
             <fieldset>
                 <label for="file">Select a file</label>
                 <input name="filedata" type="file" id="file_selection">
@@ -15,7 +15,7 @@
         </form>
 
         <h2>DECODE</h2>
-        <form id="decode-file" method="post" action="/decode/" enctype="multipart/form-data">
+        <form id="decode-file" method="post" action="/api/decode/" enctype="multipart/form-data">
             <fieldset>
                 <label for="file">Select a file</label>
                 <input name="filedata" type="file" id="file_selection">
