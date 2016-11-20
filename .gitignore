@@ -4,3 +4,4 @@ testenvs/
 build/
 *.test
 *.png
+*.gene
