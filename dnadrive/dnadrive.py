@@ -1,13 +1,16 @@
 import os
 import binascii
 
-###############################################
-# Inputs: Argument should be a string
-#
-# Returns string of encoded DNA sequence
-###############################################
+class StringEmptyException(Exception):
+    pass
+
+class NotStringException(Exception):
+    pass
 
 def encode_string(s):
+   """ Inputs: Argument should be a string
+       Returns string of encoded DNA sequence
+   """
    GCarr=['AAAAGGGGGG',
    'AAATGGGGGG',
    'AATAGGGGGG',
@@ -26,29 +29,21 @@ def encode_string(s):
    'TTTTGGGGGG']
    if type(s)==str :
       if s=='':
-         print "Error: String is empty"
-         return
+         raise StringEmptyException
       dnaEnc='GGGGGG'
       for i in s:
          hexbyt=int(binascii.hexlify(i),16)
          ind = divmod(hexbyt,16)
          dnaEnc = dnaEnc + GCarr[ind[0]]+GCarr[ind[1]]
-      print dnaEnc
+      # print dnaEnc
       return dnaEnc
    else:
-      print "Error: Incorrect argument. argument should be 'str'"
-      return
-
-
-###############################################
-# Input: Arguments should be a input and
-#        output file
-#
-# Output: Writes encoded DNA sequence in 
-#         output file
-###############################################
+      raise NotStringException
 
 def encode_file(inp,out):
+   """ Input: Arguments should be a input and output file
+       Output: Writes encoded DNA sequence in output file
+   """
    GCarr=['AAAAGGGGGG',
    'AAATGGGGGG',
    'AATAGGGGGG',
@@ -75,8 +70,8 @@ def encode_file(inp,out):
 #               print line
                for byt in line:
                   if byt == '':
-                     print "Error: file is empty"
-                     return 
+                     raise Exception("Error: String is empty")
+                      
                   hexbyt = int(binascii.hexlify(byt),16)
                   ind = divmod(hexbyt,16)
                   dnaEnc = dnaEnc + GCarr[ind[0]] + GCarr[ind[1]]
@@ -86,18 +81,15 @@ def encode_file(inp,out):
 #         with open(out,'w') as w:
 #            w.write(dnaEnc)
       else: 
-         print "Error: Input file doesnot exist"
+         raise Exception("Error: Input file doesnot exist") 
    else: 
-      print "Error: Arguments should be string."
-      return
-
-
-###############################################
-# Input: Argument as string to be decoded
-#
-# Returns string of decoded DNA sequence
-###############################################               
+      raise Exception("Error: Arguments should be string.") 
+            
 def decode_string(dna):
+   """
+      Input: Argument as string to be decoded
+      Returns string of decoded DNA sequence
+   """
    hexAT={'AAAA':'0',
       'AAAT':'1',
       'AATA':'2',
@@ -124,25 +116,20 @@ def decode_string(dna):
             elif AT == '':
               continue
             else: 
-              print "Error: DNA sequence not in required format (1)"
-#              return
+              raise Exception("Error: DNA sequence not in required format (1)")
          else: 
-           print "Error: DNA sequence not in required format (2)"
-#           return
+           raise Exception("Error: DNA sequence not in required format (2)")
+      # print dnaDec
       return binascii.unhexlify(dnaDec)
-   else: print "Error: Arguments should be string"
-
-
-
-###############################################
-# Inputs: 1st argument as input file with DNA 
-#         sequence to be decoded.
-#         2nd argument as output file where
-#         decoded DNA seq will be written
-#
-# Output: output file with decoded DNA seq
-###############################################               
+   else:
+      raise Exception("Error: Arguments should be string")
+            
 def decode_file(inp,out):
+   """
+   Inputs: 1st argument as input file with DNA sequence to be decoded.
+             2nd argument as output file where decoded DNA seq will be written
+   Output: output file with decoded DNA seq
+   """
    hexAT={'AAAA':'0',
       'AAAT':'1',
       'AATA':'2',
@@ -167,23 +154,19 @@ def decode_file(inp,out):
             for i in xrange(0,len(dnaSeq),10):
                Gs,AT=dnaSeq[i:i+6],dnaSeq[i+6:i+10]
                if (Gs == "GGGGGG"):
+                  # print AT
                   if AT in hexAT.keys() :
                      dnaDec=dnaDec+hexAT[AT]
-                  elif (AT == '')or(AT=='\n') :
-#                     print "ok"
-                     continue
-                  else:
-#                     print "abc"+str(type(AT))+"def"
-                     print "Error: DNA sequence not in required format (3)"
-                     return
+                  elif AT == '\n' or AT == '':
+                    continue
+                  else: 
+                     # print AT,int(AT)
+                     raise Exception("Error: DNA sequence not in required format (3)")
                else: 
-                 print "Error: DNA sequence not in required format (4)"
-                 return
-#            with open(out,'w') as w:
-            w.write(binascii.unhexlify(dnaDec))
+                  raise Exception("Error: DNA sequence not in required format (4)")
+            with open(out,'w') as w:
+               w.write(binascii.unhexlify(dnaDec))
       else:
-         print "Error: File doesnot exist"
-         return
+         raise Exception("Error: File doesnot exist")
    else:
-      print "Error invalid arguments"
-      return
+      raise Exception("Error invalid arguments")
