@@ -16,7 +16,7 @@ class dnadriveTestCase(unittest.TestCase):
       self.assertIsNotNone(dnadrive.encode_string(a))
 
    def test_encodedecode(self):
-      inp = "hello world"
+      inp = "hello_world"
       gene = dnadrive.encode_string(inp)
       outp = dnadrive.decode_string(gene)
       self.assertEqual(inp,outp)
@@ -25,6 +25,13 @@ class dnadriveTestCase(unittest.TestCase):
       inp = "input.test"
       outp = "output.test"
       check = "check.test"
+      gene = dnadrive.encode_file(inp,outp)
+      outp = dnadrive.decode_file(outp,check)
+
+   def test_encodedecodefile2(self):
+      inp = "10000290816.png"
+      outp = "output2.test"
+      check = "check2.test"
       gene = dnadrive.encode_file(inp,outp)
       outp = dnadrive.decode_file(outp,check)
       # self.assertEqual(inp,outp)

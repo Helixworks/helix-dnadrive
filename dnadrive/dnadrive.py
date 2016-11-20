@@ -148,18 +148,19 @@ def decode_file(inp,out):
       'TTTT':'f'}
    if (type(inp)==str)and(type(out)==str):
       if os.path.isfile(inp):
-         with open(inp,'r') as f:
+         with open(inp,'r') as f, open(out,'w') as w:
             dnaSeq=f.read()
             dnaDec=""
             for i in xrange(0,len(dnaSeq),10):
                Gs,AT=dnaSeq[i:i+6],dnaSeq[i+6:i+10]
                if (Gs == "GGGGGG"):
+                  # print AT
                   if AT in hexAT.keys() :
                      dnaDec=dnaDec+hexAT[AT]
-                  elif AT == '\n' :
+                  elif AT == '\n' or AT == '':
                     continue
                   else: 
-                     # print AT
+                     # print AT,int(AT)
                      raise Exception("Error: DNA sequence not in required format (3)")
                else: 
                   raise Exception("Error: DNA sequence not in required format (4)")

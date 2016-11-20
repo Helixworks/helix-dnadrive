@@ -2,3 +2,6 @@
 .pypirc
 testenvs/
 build/
+*.test
+*.png
+*.gene
