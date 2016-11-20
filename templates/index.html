@@ -1,0 +1,30 @@
+<html>
+    <head>
+    </head>
+
+    <body>
+        <h2>ENCODE</h2>
+        <form id="encode-file" method="post" action="/encode/" enctype="multipart/form-data">
+            <fieldset>
+                <label for="file">Select a file</label>
+                <input name="filedata" type="file" id="file_selection">
+            </fieldset>
+            <fieldset>
+                <button id="encode-file-btn" type="submit">Upload</button>
+            </fieldset>
+        </form>
+
+        <h2>DECODE</h2>
+        <form id="decode-file" method="post" action="/decode/" enctype="multipart/form-data">
+            <fieldset>
+                <label for="file">Select a file</label>
+                <input name="filedata" type="file" id="file_selection">
+            </fieldset>
+            <fieldset>
+                <button id="decode-file-btn" type="submit">Upload</button>
+            </fieldset>
+        </form>
+    </body>
+
+</html>
+
