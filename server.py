@@ -11,11 +11,11 @@ WTF_CSRF_CHECK_DEFAULT = False
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route("/", methods=['GET'])
+@app.route("/api/", methods=['GET'])
 def home():
     return render_template("index.html")
 
-@app.route("/encode/", methods=['POST','PUT'])
+@app.route("/api/encode/", methods=['POST','PUT'])
 @csrf.exempt
 def encode():
     file = request.files['filedata']
@@ -29,7 +29,7 @@ def encode():
                                out_filename, as_attachment=True)
 
 @csrf.exempt
-@app.route("/decode/", methods=['POST','PUT'])
+@app.route("/api/decode/", methods=['POST','PUT'])
 def decode():
     file = request.files['filedata']
     filename = secure_filename(file.filename)
