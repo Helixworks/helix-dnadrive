@@ -5,8 +5,11 @@
 dnadrive -str 'hello world' -e 
 dnadrive -str 'GGGGGGATTAGGGGGGTAAAGGGGGGATTAGGGGGGATATGGGGGGATTAGGGGGGTTAAGGGGGGATTAGGGGGGTTAAGGGGGGATTAGGGGGGTTTTGGGGGGAATAGGGGGGAAAAGGGGGGATTTGGGGGGATTTGGGGGGATTAGGGGGGTTTTGGGGGGATTTGGGGGGAATAGGGGGGATTAGGGGGGTTAAGGGGGGATTAGGGGGGATAAGGGGGG' -d
 
-dnadrive  -e -i input.test -o output.test
-dnadrive  -d -i output.test -o check.test
+## for files, we can have multiple variants 
+todo: descrive variant IDS
+
+dnadrive  -e -i input.test -o output.test -v 1
+dnadrive  -d -i output.test -o check.test 
 
 ## DOCKER
 
