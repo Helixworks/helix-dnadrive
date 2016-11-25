@@ -15,26 +15,40 @@ class dnadriveTestCase(unittest.TestCase):
       a='abc'
       self.assertIsNotNone(dnadrive.encode_string(a))
 
-   def test_encodedecode(self):
+   def test_encodeDecode(self):
       inp = "hello_world"
       gene = dnadrive.encode_string(inp)
       outp = dnadrive.decode_string(gene)
       self.assertEqual(inp,outp)
 
-   def test_encodedecodefile(self):
+   def test_encodeDecodeFile(self):
       inp = "input.test"
       outp = "output.test"
       check = "check.test"
       gene = dnadrive.encode_file(inp,outp)
       outp = dnadrive.decode_file(outp,check)
 
-   def test_encodedecodefile2(self):
-      inp = "10000290816.png"
-      outp = "output2.test"
-      check = "check2.test"
-      gene = dnadrive.encode_file(inp,outp)
-      outp = dnadrive.decode_file(outp,check)
-      # self.assertEqual(inp,outp)
+   def test_encodeDecodeFileVairants(self):
+      inp = "DNA3.jpg"
+      outp = "output"
+      check = "check"
+      gene = dnadrive.encode_file(inp,outp+"1.test",1)
+      gene = dnadrive.encode_file(inp,outp+"2.test",2)
+      gene = dnadrive.encode_file(inp,outp+"3.test",3)
+      gene = dnadrive.encode_file(inp,outp+"4.test",4)
+
+      outf = dnadrive.decode_file(outp+"1.test",check+"1.test")
+      outf = dnadrive.decode_file(outp+"2.test",check+"2.test")
+      outf = dnadrive.decode_file(outp+"3.test",check+"3.test")
+      outf = dnadrive.decode_file(outp+"4.test",check+"4.test")
+
+   # def test_encodedecodefile2(self):
+   #    inp = "10000290816.png"
+   #    outp = "output2.test"
+   #    check = "check2.test"
+   #    gene = dnadrive.encode_file(inp,outp)
+   #    outp = dnadrive.decode_file(outp,check)
+   #    # self.assertEqual(inp,outp)
 
 # #  Test cases for encode_file
 
