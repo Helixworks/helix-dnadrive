@@ -1,5 +1,6 @@
 import unittest
 from dnadrive import dnadrive
+import hashlib
 
 class dnadriveTestCase(unittest.TestCase):
 
@@ -42,6 +43,12 @@ class dnadriveTestCase(unittest.TestCase):
       outf = dnadrive.decode_file(outp+"3.test",check+"3.test")
       outf = dnadrive.decode_file(outp+"4.test",check+"4.test")
 
+      orig_hash = hashlib.md5(open(inp,'rb').read()).hexdigest()
+      
+      hash_1 = hashlib.md5(open(check+"1.test",'rb').read()).hexdigest()
+      hash_2 = hashlib.md5(open(check+"2.test",'rb').read()).hexdigest()
+      hash_3 = hashlib.md5(open(check+"3.test",'rb').read()).hexdigest()
+      hash_4 = hashlib.md5(open(check+"4.test",'rb').read()).hexdigest()
    # def test_encodedecodefile2(self):
    #    inp = "10000290816.png"
    #    outp = "output2.test"

@@ -135,7 +135,7 @@ def encode_file(inp,out,typ=1):
 #               print "file opened"
 #               dnaEnc=""
                if os.path.getsize(inp)>0:
-                  header=ntpath.basename(inp)+'@'+str(typ)+' '+str(datetime.datetime.now())+'\n'
+                  header=ntpath.basename(inp)+'@'+str(typ)+' | '+str(datetime.datetime.now()) + " | openMoSSv1.0 | helix.works" +'\n'
                   w.write(header)
                   for line in f:
 #                     print line

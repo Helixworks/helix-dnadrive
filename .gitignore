@@ -6,3 +6,4 @@ build/
 *.png
 .DS_Store
 *.gene
+fabfile.py
