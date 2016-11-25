@@ -36,7 +36,10 @@ def decode():
     filename = secure_filename(file.filename)
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(file_path)
-    out_filename = filename.replace('.moss','')
+    infile = open(file_path, 'r')
+    firstLine = infile.readline()
+    # out_filename = "ds"
+    out_filename = firstLine.split("|")[0].strip().split('@')[0]
     out_file_path = os.path.join(app.config['UPLOAD_FOLDER'], out_filename)
     gene = dnadrive.decode_file(file_path,out_file_path)
     return send_from_directory(app.config['UPLOAD_FOLDER'],
