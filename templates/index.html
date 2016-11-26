@@ -1,5 +1,6 @@
 <html>
     <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     </head>
 
     <body>
@@ -31,6 +32,62 @@
                 <button id="decode-file-btn" type="submit">Upload</button>
             </fieldset>
         </form>
+
+        <h2>ENCODE TEXT</h2>
+        <form id="encode-textarea"  >
+                <label for="file">Enter Text</label>
+                <textarea name="textdata" id="file_selection"></textarea>
+                <label for="file">Select a Variant</label>
+                <input type="hidden" value="textarea"></input>
+                <select name="variant" id="variant">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+        </form>
+        <button id="encode-text-btn">Upload</button>
+        <div id="dnaresult"></div>
+
+
+        <h2>DECODE TEXT</h2>
+        <form id="decode-textarea"  >
+                <label for="file">Enter Text</label>
+                <textarea name="textdata" id="file_selection"></textarea>
+                <label for="file">Select a Variant</label>
+                <input type="hidden" value="textarea"></input>
+        </form>
+        <button id="decode-text-btn">Upload</button>
+        <div id="textresult"></div>
+
+        <script>
+        $( document ).ready(function() {
+            $('button#encode-text-btn').click( function() {
+                $.ajax({
+                    url: '/api/encode/',
+                    type: 'post',
+                    dataType: 'json',
+                    data: $('form#encode-textarea').serialize(),
+                    success: function(data) {
+                               $('#dnaresult').html(data.data)
+                             }
+                });
+            });
+
+            $('button#decode-text-btn').click( function() {
+                $.ajax({
+                    url: '/api/decode/',
+                    type: 'post',
+                    dataType: 'json',
+                    data: $('form#decode-textarea').serialize(),
+                    success: function(data) {
+                                console.log(data);
+                               $('#textresult').html(data.data)
+                             }
+                });
+            });
+        });
+        </script>
     </body>
 
 </html>
