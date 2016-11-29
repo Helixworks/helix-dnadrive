@@ -9,9 +9,11 @@ please see the [Techinical Documentation](https://openmoss.org/docs/MoSS.pdf) fo
 
 ### Installation
 
-* Please install in a virtualenv that is running python2.7 (we do *not* support python3 as of now
-* `python setup.py install` will install the tool
-* `pip install -r requirements.txt` if you would like to use the provided flask server. 
+* `pip install dnadrive`
+(or)
+* Please install in a virtualenv that is running python2.7 (we do **not** support python3 as of now)
+* `python setup.py install` in the source directory will also install
+* `pip install -r requirements.txt` if you would like to use the provided flask server. (does not install with pip)
 
 ### Usage
 

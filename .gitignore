@@ -1,8 +1,10 @@
 *.pyc
+MANIFEST
 .pypirc
 testenvs/
 build/
 *.test
+dist/
 *.png
 .DS_Store
 *.gene
