@@ -1,4 +1,4 @@
-![logo](https://openmoss.org/img/helix_moss.png "logo-1")
+![logo](https://openmoss.org/img/helix_moss.png "logo-new")
 
 # DNAdrive
 
