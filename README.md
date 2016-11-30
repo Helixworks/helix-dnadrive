@@ -22,6 +22,7 @@ All supported operations are done on files
 *	variant is detected automatically on decode
 
 **Variant list to choose from**
+
 1. Cost efficiency - GCGGGGCXXXXCGGGGCG
 2. Balanced - CGGGGCXXXXCGGGGC
 3. Lower secondary structures - CGGGGXXXXGGGGC
