@@ -1,5 +1,3 @@
-![logo](https://openmoss.org/img/helix_moss.png "logo-new")
-
 # DNAdrive
 
 `dnadrive` is a tool to convert data to and from the [openMoSS](http://openmoss.org) format.
