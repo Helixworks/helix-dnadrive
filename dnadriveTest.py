@@ -26,11 +26,13 @@ class dnadriveTestCase(unittest.TestCase):
       inp = "input.test"
       outp = "output.test"
       check = "check.test"
+      well = "check.well"
       gene = dnadrive.encode_file(inp,outp)
-      outp = dnadrive.decode_file(outp,check)
+      outf = dnadrive.decode_file(outp,check)
+      outp = dnadrive.generate_well_mapping(outp,well)
 
    def test_encodeDecodeFileVairants(self):
-      inp = "DNA3.jpg"
+      inp = "input.test"
       outp = "output"
       check = "check"
       gene = dnadrive.encode_file(inp,outp+"1.test",1)

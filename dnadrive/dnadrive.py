@@ -253,3 +253,52 @@ def decode_file(inp,out):
    else:
       raise Exception("Error invalid arguments")
 
+WELL_MAPPING = {
+   "GCGGGGCAAAACGGGGCG":"1",
+   "GCGGGGCAAATCGGGGCG":"2",
+   "GCGGGGCAATACGGGGCG":"3",
+   "GCGGGGCAATTCGGGGCG":"4",
+   "GCGGGGCATAACGGGGCG":"5",
+   "GCGGGGCATATCGGGGCG":"6",
+   "GCGGGGCATTACGGGGCG":"7",
+   "GCGGGGCATTTCGGGGCG":"8",
+   "GCGGGGCTAAACGGGGCG":"9",
+   "GCGGGGCTAATCGGGGCG":"10",
+   "GCGGGGCTATACGGGGCG":"11",
+   "GCGGGGCTATTCGGGGCG":"12",
+   "GCGGGGCTTAACGGGGCG":"13",
+   "GCGGGGCTTATCGGGGCG":"14",
+   "GCGGGGCTTTACGGGGCG":"15",
+   "GCGGGGCTTTTCGGGGCG":"16",
+   "GCCCCGCTTTTCGCCCCG":"17",
+   "GCCCCGCTTTACGCCCCG":"18",
+   "GCCCCGCTTATCGCCCCG":"19",
+   "GCCCCGCTTAACGCCCCG":"20",
+   "GCCCCGCTATTCGCCCCG":"21",
+   "GCCCCGCTATACGCCCCG":"22",
+   "GCCCCGCTAATCGCCCCG":"23",
+   "GCCCCGCTAAACGCCCCG":"24",
+   "GCCCCGCATTTCGCCCCG":"25",
+   "GCCCCGCATTACGCCCCG":"26",
+   "GCCCCGCATATCGCCCCG":"27",
+   "GCCCCGCATAACGCCCCG":"28",
+   "GCCCCGCAATTCGCCCCG":"29",
+   "GCCCCGCAATACGCCCCG":"30",
+   "GCCCCGCAAATCGCCCCG":"31",
+   "GCCCCGCAAAACGCCCCG":"32",
+}
+
+def generate_well_mapping(inp,outp):
+   if os.path.isfile(inp):
+      with open(inp,'r') as f, open(outp,'w') as w:
+         dnaSeq=f.read()
+         moss=dnaSeq.split('\n')
+         typ=moss[0].split('@')[1][0]
+         dnaDec=""
+         enc=[e for e in moss[1].split(',') if e!='']
+         print moss
+         for i,moss_bloc in enumerate(enc,1):
+            if moss_bloc in WELL_MAPPING.keys():
+               print i,moss_bloc,WELL_MAPPING[moss_bloc]
+            else:
+               raise Exception("Corrupted Moss file given as input")
