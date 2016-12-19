@@ -2,6 +2,7 @@ import os
 import binascii
 import ntpath
 import datetime
+from string import maketrans  
 
 class StringEmptyException(Exception):
     pass
@@ -156,13 +157,8 @@ def encode_file(inp,out,typ=1):
          raise Exception("Error: Type argument should be string or invalid type value.")
    else:
       raise Exception("Error: Arguments should be string.") 
-            
-def decode_string(dna):
-   """
-      Input: Argument as string to be decoded
-      Returns string of decoded DNA sequence
-   """
-   hexAT={'AAAA':'0',
+
+hexAT={'AAAA':'0',
       'AAAT':'1',
       'AATA':'2',
       'AATT':'3',
@@ -177,7 +173,12 @@ def decode_string(dna):
       'TTAA':'c',
       'TTAT':'d',
       'TTTA':'e',
-      'TTTT':'f'}
+      'TTTT':'f'}       
+def decode_string(dna):
+   """
+      Input: Argument as string to be decoded
+      Returns string of decoded DNA sequence
+   """
    if type(dna)==str:
       dnaDec=""
       for i in xrange(0,len(dna),10):
@@ -202,22 +203,6 @@ def decode_file(inp,out):
              2nd argument as output file where decoded DNA seq will be written
    Output: output file with decoded DNA seq
    """
-   hexAT={'AAAA':'0',
-      'AAAT':'1',
-      'AATA':'2',
-      'AATT':'3',
-      'ATAA':'4',
-      'ATAT':'5',
-      'ATTA':'6',
-      'ATTT':'7',
-      'TAAA':'8',
-      'TAAT':'9',
-      'TATA':'a',
-      'TATT':'b',
-      'TTAA':'c',
-      'TTAT':'d',
-      'TTTA':'e',
-      'TTTT':'f'}
    if (type(inp)==str)and(type(out)==str):
       if os.path.isfile(inp):
          with open(inp,'r') as f, open(out,'w') as w:
@@ -253,7 +238,7 @@ def decode_file(inp,out):
    else:
       raise Exception("Error invalid arguments")
 
-BITLENGTH = 4
+BITLENGTH = 8
 PADDING_BLOCK = "GCAACGCAGCACGCAACG"
 WELL_MAPPING = {
    "GCGGGGCAAAACGGGGCG":"1",
@@ -294,14 +279,22 @@ WELL_MAPPING = {
    #    print '{0:04x}'.format(i)
 
 def get_address_str(num):
+   outtab = "AT"
+   intab = "TA"
+   trantab = maketrans(intab, outtab)
+
    enc = ('{0:0'+str(BITLENGTH)+'x}').format(num)
    outp = []
    for i,e in enumerate(enc,0):
-      # print int(i)%2==0,e
+      # print '>>>>>>',int(i),e,hexAT.keys()[hexAT.values().index(str(i))]
       if int(i)%2==0:
          outp.append(WELL_MAPPING.keys()[WELL_MAPPING.values().index(str(int(e,16)+1))])
       else:
-         outp.append(WELL_MAPPING.keys()[WELL_MAPPING.values().index(str(int(e,16)+16))])
+         complement = hexAT.keys()[hexAT.values().index(str(e))]
+         complement = complement.translate(trantab)[::-1]
+         complement = [key for key in WELL_MAPPING.keys() if int(WELL_MAPPING[key])>16 and complement in key][0]
+         outp.append(complement)
+   # print num,outp
    return outp
 
 from itertools import izip_longest
@@ -321,7 +314,12 @@ def generate_well_mapping(inp,outp):
          typ=moss[0].split('@')[1][0]
          dnaDec=""
          enc=[e for e in moss[1].split(',') if e!='']
-         print len(enc)
-         for i,moss_bloc in enumerate(grouper(enc,BITLENGTH,PADDING_BLOCK),1):
-            # print 'addr','{0:04x}'.format(i)
-            print [int(WELL_MAPPING[bloc]) for bloc in list(get_address_str(i))+list(moss_bloc)]
+         # print enc, len(enc)
+   well_numbers = []
+   well_numbers.append(33)
+   for i,moss_bloc in enumerate(grouper(enc,BITLENGTH,PADDING_BLOCK),0):
+      # print 'addr','{0:04x}'.format(i)
+      well_numbers += [int(WELL_MAPPING[bloc]) for bloc in list(get_address_str(i))+list(moss_bloc)]
+      well_numbers += [34,38]
+   well_numbers += [34, 38, 35, 36]
+   print well_numbers
