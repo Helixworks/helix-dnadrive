@@ -253,6 +253,8 @@ def decode_file(inp,out):
    else:
       raise Exception("Error invalid arguments")
 
+BITLENGTH = 4
+PADDING_BLOCK = "GCAACGCAGCACGCAACG"
 WELL_MAPPING = {
    "GCGGGGCAAAACGGGGCG":"1",
    "GCGGGGCAAATCGGGGCG":"2",
@@ -286,9 +288,32 @@ WELL_MAPPING = {
    "GCCCCGCAATACGCCCCG":"30",
    "GCCCCGCAAATCGCCCCG":"31",
    "GCCCCGCAAAACGCCCCG":"32",
+   PADDING_BLOCK:"44", # padding well
 }
+   # for i in range(1,50):
+   #    print '{0:04x}'.format(i)
+
+def get_address_str(num):
+   enc = ('{0:0'+str(BITLENGTH)+'x}').format(num)
+   outp = []
+   for i,e in enumerate(enc,0):
+      # print int(i)%2==0,e
+      if int(i)%2==0:
+         outp.append(WELL_MAPPING.keys()[WELL_MAPPING.values().index(str(int(e,16)+1))])
+      else:
+         outp.append(WELL_MAPPING.keys()[WELL_MAPPING.values().index(str(int(e,16)+16))])
+   return outp
+
+from itertools import izip_longest
+
+def grouper(iterable, n, fillvalue=None):
+    args = [iter(iterable)] * n
+    return izip_longest(*args, fillvalue=fillvalue)
 
 def generate_well_mapping(inp,outp):
+   
+   # for n in range(0,50,5):
+   #    print get_address_str(n)
    if os.path.isfile(inp):
       with open(inp,'r') as f, open(outp,'w') as w:
          dnaSeq=f.read()
@@ -296,9 +321,7 @@ def generate_well_mapping(inp,outp):
          typ=moss[0].split('@')[1][0]
          dnaDec=""
          enc=[e for e in moss[1].split(',') if e!='']
-         print moss
-         for i,moss_bloc in enumerate(enc,1):
-            if moss_bloc in WELL_MAPPING.keys():
-               print i,moss_bloc,WELL_MAPPING[moss_bloc]
-            else:
-               raise Exception("Corrupted Moss file given as input")
+         print len(enc)
+         for i,moss_bloc in enumerate(grouper(enc,BITLENGTH,PADDING_BLOCK),1):
+            # print 'addr','{0:04x}'.format(i)
+            print [int(WELL_MAPPING[bloc]) for bloc in list(get_address_str(i))+list(moss_bloc)]
