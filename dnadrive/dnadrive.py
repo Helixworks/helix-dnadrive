@@ -291,7 +291,7 @@ def get_address_str(num):
          outp.append(WELL_MAPPING.keys()[WELL_MAPPING.values().index(str(int(e,16)+1))])
       else:
          complement = hexAT.keys()[hexAT.values().index(str(e))]
-         complement = complement.translate(trantab)[::-1]
+         complement = complement.translate(trantab)#[::-1]
          complement = [key for key in WELL_MAPPING.keys() if int(WELL_MAPPING[key])>16 and complement in key][0]
          outp.append(complement)
    # print num,outp
