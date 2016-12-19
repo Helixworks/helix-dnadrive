@@ -305,21 +305,21 @@ def grouper(iterable, n, fillvalue=None):
 
 def generate_well_mapping(inp,outp):
    
-   # for n in range(0,50,5):
-   #    print get_address_str(n)
-   if os.path.isfile(inp):
-      with open(inp,'r') as f, open(outp,'w') as w:
-         dnaSeq=f.read()
-         moss=dnaSeq.split('\n')
-         typ=moss[0].split('@')[1][0]
-         dnaDec=""
-         enc=[e for e in moss[1].split(',') if e!='']
-         # print enc, len(enc)
-   well_numbers = []
-   well_numbers.append(33)
-   for i,moss_bloc in enumerate(grouper(enc,BITLENGTH,PADDING_BLOCK),0):
-      # print 'addr','{0:04x}'.format(i)
-      well_numbers += [int(WELL_MAPPING[bloc]) for bloc in list(get_address_str(i))+list(moss_bloc)]
-      well_numbers += [34,38]
-   well_numbers += [34, 38, 35, 36]
-   print well_numbers
+   for n in range(1,3200,353):
+      print n,'->',[int(WELL_MAPPING[bloc]) for bloc in list(get_address_str(n))]
+   # if os.path.isfile(inp):
+   #    with open(inp,'r') as f, open(outp,'w') as w:
+   #       dnaSeq=f.read()
+   #       moss=dnaSeq.split('\n')
+   #       typ=moss[0].split('@')[1][0]
+   #       dnaDec=""
+   #       enc=[e for e in moss[1].split(',') if e!='']
+   #       # print enc, len(enc)
+   # well_numbers = []
+   # well_numbers.append(33)
+   # for i,moss_bloc in enumerate(grouper(enc,BITLENGTH,PADDING_BLOCK),0):
+   #    # print 'addr','{0:04x}'.format(i)
+   #    well_numbers += [int(WELL_MAPPING[bloc]) for bloc in list(get_address_str(i))+list(moss_bloc)]
+   #    well_numbers += [34,38]
+   # well_numbers += [34, 38, 35, 36]
+   # print well_numbers
