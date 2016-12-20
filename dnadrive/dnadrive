@@ -14,13 +14,14 @@ parser.add_argument('-f',action='store_true',default=False)
 
 parser.add_argument('-e',action='store_true',default=False)
 parser.add_argument('-d',action='store_true',default=False)
+parser.add_argument('-g',action='store_true',default=False)
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    if not (args.e or args.d):
-        raise Exception("Must specify -e or -d")
+    if not (args.e or args.d or args.g):
+        raise Exception("Must specify -e or -d or -w")
     if (args.e and args.d):
-        raise Exception("Must specify -e OR -d")
+        raise Exception("Must specify -e AND -d")
 
     if args.e:
         if args.string:
@@ -36,5 +37,13 @@ if __name__ == '__main__':
             print dnadrive.decode_string(args.string)
         elif args.infile:
             dnadrive.decode_file(args.infile,args.outfile)
+        else:
+            raise Exception('No File detected Error')
+
+    if args.g:
+        if args.string:
+            raise Exception("Unimplimented for Raw Strings For Now!")
+        elif args.infile:
+            dnadrive.generate_well_file(args.infile,args.outfile)
         else:
             raise Exception('No File detected Error')

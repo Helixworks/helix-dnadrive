@@ -29,7 +29,8 @@ class dnadriveTestCase(unittest.TestCase):
       well = "check.well"
       gene = dnadrive.encode_file(inp,outp)
       outf = dnadrive.decode_file(outp,check)
-      outp = dnadrive.generate_well_mapping(outp,well)
+      outp = dnadrive.generate_well_file(outp,well)
+      # self.assertEqual(outp,[33, 1, 17, 1, 17, 1, 17, 1, 17, 7, 24, 7, 27, 7, 20, 7, 20, 34, 38, 1, 17, 1, 17, 1, 17, 1, 18, 7, 17, 3, 32, 8, 25, 7, 17, 34, 38, 1, 17, 1, 17, 1, 17, 1, 19, 8, 30, 7, 20, 7, 28, 1, 22, 34, 38, 34, 38, 35, 36])
 
    def test_encodeDecodeFileVairants(self):
       inp = "input.test"

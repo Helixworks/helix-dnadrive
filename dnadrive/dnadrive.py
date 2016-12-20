@@ -303,23 +303,28 @@ def grouper(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return izip_longest(*args, fillvalue=fillvalue)
 
-def generate_well_mapping(inp,outp):
+def generate_well_file(inp,outp):
    
    # for n in range(1,200,350):
    #    print n,[int(WELL_MAPPING[bloc]) for bloc in list(get_address_str(n))]
    if os.path.isfile(inp):
-      with open(inp,'r') as f, open(outp,'w') as w:
+      with open(inp,'r') as f:
          dnaSeq=f.read()
          moss=dnaSeq.split('\n')
          typ=moss[0].split('@')[1][0]
          dnaDec=""
          enc=[e for e in moss[1].split(',') if e!='']
          # print enc, len(enc)
-   well_numbers = []
-   well_numbers.append(33)
-   for i,moss_bloc in enumerate(grouper(enc,BITLENGTH,PADDING_BLOCK),0):
-      # print 'addr','{0:04x}'.format(i)
-      well_numbers += [int(WELL_MAPPING[bloc]) for bloc in list(get_address_str(i))+list(moss_bloc)]
-      well_numbers += [34,38]
-   well_numbers += [34, 38, 35, 36]
-   print well_numbers
+      well_numbers = []
+      well_numbers.append(33)
+      for i,moss_bloc in enumerate(grouper(enc,BITLENGTH,PADDING_BLOCK),0):
+         # print 'addr','{0:04x}'.format(i)
+         well_numbers += [int(WELL_MAPPING[bloc]) for bloc in list(get_address_str(i))+list(moss_bloc)]
+         well_numbers += [34,38]
+      well_numbers += [34, 38, 35, 36]
+      with open(outp,'w') as w:
+         header = moss[0]
+         w.write(header)
+         w.write('\n')
+         w.write(','.join([str(w) for w in well_numbers]))
+         return outp

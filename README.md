@@ -37,6 +37,10 @@ dnadrive  -e -i input.test -o output.test -v 1
 ```
 dnadrive  -d -i output.test -o check.test 
 ```
+* To Generate Well File
+```
+dnadrive  -g -i output.test -o check.test 
+```
 
 ### DOCKER
 we provide a docker file for REST access to openmoss encoding/decoding service.
