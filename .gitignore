@@ -10,3 +10,4 @@ dist/
 *.gene
 fabfile.py
 *.mass
+*.well
