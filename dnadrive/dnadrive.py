@@ -2,7 +2,7 @@ import os
 import binascii
 import ntpath
 import datetime
-from string import maketrans  
+# from string import maketrans  
 
 class StringEmptyException(Exception):
     pass
@@ -94,7 +94,7 @@ def encode_string(s):
          raise StringEmptyException
       dnaEnc='GGGGGG'
       for i in s:
-         hexbyt=int(binascii.hexlify(i),16)
+         hexbyt=int(binascii.hexlify(str.encode(i)),16)
          ind = divmod(hexbyt,16)
          dnaEnc = dnaEnc + GCarr[ind[0]]+GCarr[ind[1]]
       # print dnaEnc
@@ -132,7 +132,7 @@ def encode_file(inp,out,typ=1):
       if(type(typ)==int)and(check_type(typ)):
          if os.path.isfile(inp):
 #            print "file is going to open"
-            with open(inp,'rb') as f, open(out,'w') as w:
+            with open(inp,'r') as f, open(out,'w') as w:
 #               print "file opened"
 #               dnaEnc=""
                if os.path.getsize(inp)>0:
@@ -143,9 +143,10 @@ def encode_file(inp,out,typ=1):
                      for byt in line:
 #                        if byt == '':
 #                           raise Exception("Error: String is empty")
-                         
-                        hexbyt = int(binascii.hexlify(byt),16)
+                        # print(byt,typ,'@@')
+                        hexbyt = int(binascii.hexlify(str.encode(str(byt))),16)
                         ind = divmod(hexbyt,16)
+                        # print("!!!!!",hexbyt,int.from_bytes(str(byt).encode(), 'big'))
                         dnaEnc = option[typ](GCarr[ind[0]],GCarr[ind[1]])
 #                        dnaEnc = dnaEnc + GCarr[ind[0]] + GCarr[ind[1]]
                         w.write(dnaEnc)
@@ -181,7 +182,7 @@ def decode_string(dna):
    """
    if type(dna)==str:
       dnaDec=""
-      for i in xrange(0,len(dna),10):
+      for i in range(0,len(dna),10):
          Gs,AT=dna[i:i+6],dna[i+6:i+10]
          if (Gs == "GGGGGG"):
             if AT in hexAT.keys() :
@@ -193,7 +194,7 @@ def decode_string(dna):
          else: 
            raise Exception("Error: DNA sequence not in required format (2)")
       # print dnaDec
-      return binascii.unhexlify(dnaDec)
+      return binascii.unhexlify(dnaDec).decode("utf-8") 
    else:
       raise Exception("Error: Arguments should be string")
             
@@ -205,7 +206,7 @@ def decode_file(inp,out):
    """
    if (type(inp)==str)and(type(out)==str):
       if os.path.isfile(inp):
-         with open(inp,'r') as f, open(out,'w') as w:
+         with open(inp,'r') as f, open(out,'wb') as w:
             dnaSeq=f.read()
             moss=dnaSeq.split('\n')
             typ=moss[0].split('@')[1][0]
@@ -281,27 +282,30 @@ WELL_MAPPING = {
 def get_address_str(num):
    outtab = "AT"
    intab = "TA"
-   trantab = maketrans(intab, outtab)
+   trantab = str.maketrans(intab, outtab)
 
    enc = ('{0:0'+str(BITLENGTH)+'x}').format(num)
    outp = []
    for i,e in enumerate(enc,0):
       # print '>>>>>>',int(i),e,hexAT.keys()[hexAT.values().index(str(i))]
       if int(i)%2==0:
-         outp.append(WELL_MAPPING.keys()[WELL_MAPPING.values().index(str(int(e,16)+1))])
+         valz = list(WELL_MAPPING.values())
+         keyz = list(WELL_MAPPING.keys())
+         outp.append(keyz[valz.index(str(int(e,16)+1))])
       else:
-         complement = hexAT.keys()[hexAT.values().index(str(e))]
+         complement = list(hexAT.keys())[list(hexAT.values()).index(str(e))]
          complement = complement.translate(trantab)#[::-1]
          complement = [key for key in WELL_MAPPING.keys() if int(WELL_MAPPING[key])>16 and complement in key][0]
          outp.append(complement)
    # print num,outp
    return outp
 
-from itertools import izip_longest
+
 
 def grouper(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
-    return izip_longest(*args, fillvalue=fillvalue)
+    from itertools import zip_longest
+    return zip_longest(*args, fillvalue=fillvalue)
 
 def generate_well_file(inp,outp):
    

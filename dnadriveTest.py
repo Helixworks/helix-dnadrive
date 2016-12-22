@@ -46,16 +46,20 @@ class dnadriveTestCase(unittest.TestCase):
       outf = dnadrive.decode_file(outp+"3.test",check+"3.test")
       outf = dnadrive.decode_file(outp+"4.test",check+"4.test")
 
-      orig_hash = hashlib.md5(open(inp,'rb').read()).hexdigest()
-      
-      hash_1 = hashlib.md5(open(check+"1.test",'rb').read()).hexdigest()
-      self.assertEqual(orig_hash,hash_1)
-      hash_2 = hashlib.md5(open(check+"2.test",'rb').read()).hexdigest()
-      self.assertEqual(orig_hash,hash_2)
-      hash_3 = hashlib.md5(open(check+"3.test",'rb').read()).hexdigest()
-      self.assertEqual(orig_hash,hash_3)
-      hash_4 = hashlib.md5(open(check+"4.test",'rb').read()).hexdigest()
-      self.assertEqual(orig_hash,hash_4)
+      with open(inp,'rb') as w:
+         orig_hash = hashlib.md5(w.read()).hexdigest()
+         with open(check+"1.test",'rb') as c1:
+            hash_1 = hashlib.md5(c1.read()).hexdigest()
+            self.assertEqual(orig_hash,hash_1)
+         with open(check+"2.test",'rb') as c2:
+            hash_2 = hashlib.md5(c2.read()).hexdigest()
+            self.assertEqual(orig_hash,hash_2)
+         with open(check+"3.test",'rb') as c3:
+            hash_3 = hashlib.md5(c3.read()).hexdigest()
+            self.assertEqual(orig_hash,hash_3)
+         with open(check+"4.test",'rb') as c4:
+            hash_4 = hashlib.md5(c4.read()).hexdigest()
+            self.assertEqual(orig_hash,hash_4)
 
 
    # def test_encodedecodefile2(self):
