@@ -331,4 +331,4 @@ def generate_well_file(inp,outp):
          w.write(header)
          w.write('\n')
          w.write(','.join([str(w) for w in well_numbers]))
-         return outp
+      return well_numbers
