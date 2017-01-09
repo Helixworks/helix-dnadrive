@@ -57,3 +57,13 @@ curl -X POST -F filedata=@out.moss "http://localhost:5000/decode/" > out.png
 ```
 
 
+
+LICENCE
+-------
+
+The Project is available under the MIT licence. see licence.txt for more information.
+
+This software is in pre-alpha stage and the APIs are not set in stone and may change without notice.
+please contact wingston@helix.works for any help you may need in getting the platform set up.
+
+Forks will be avaluated and merged on their own merit. so please feel free to hack away at the platform.
